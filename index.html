@@ -1,198 +1,32 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 
 <head>
-	<link rel="shortcut icon" type="image/x-icon" href="vaf/favicon.ico">
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Faz-Terminal</title>
-	<style>
-		body {
-			margin: 0;
-			background-repeat: no-repeat;
-			overflow-x: hidden;
-			background-size: 100vw;
-			background-image: url("BR3.png");
-			background-color: rgb(0, 0, 0);
-		}
-
-		#hay {
-			margin-top: 5.5%;
-			margin-left: 14%;
-			width: 72%;
-			height: 64%;
-			z-index: -1;
-		}
-
-		a,
-		span {
-			text-decoration: none;
-			color: limegreen;
-			font-size: 2rem;
-		}
-
-		span {
-			visibility: hidden;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="user-scalable=no">
+    <link rel="icon" href="icon/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon/icon.png">
+    <link rel="stylesheet" type="text/css" href="fonts/gamefont.css">
+    <title>Get To School 2 Delux</title>
 </head>
 
-<!-- <body onload="setTimeout(()=>{load()},1000);browserTest()"> -->
-
-<body onload="setTimeout(()=>{load()},1000);"></body>
-<div id="hay">
-</div>
-
-<script>
-	let userAgent = navigator.userAgent;
-	let browserName;
-	// function browserTest() {
-	// 	if (userAgent.match(/firefox|fxios/i)) {
-	// 	}
-	// 	else {
-	// 		alert("Lel go 2 FireFox u  nerd")
-	// 		location.reload();
-	// 	}
-	// }
-
-	// const TYPEWRITERSPEED = 150
-	var typewriterSpeed = 75
-	const cursorFlashSpeed = 350
-	const cursorCharacter = ' ▊'
-	// document.addEventListener('keydown', (event) => {
-	// 	if (event.keydown == '32') {
-	// 		typewriterSpeed = TYPEWRITERSPEED / 5
-	// 	}
-	// })
-	// document.addEventListener('keyup', (event) => {
-	// 	if (event.keydown == '32') {
-	// 		typewriterSpeed = TYPEWRITERSPEED
-	// 	}
-	// })
-	var linkNumber = 0
-	var characterNumber = 0
-	var spanToggle = false
-	var allCharacters = []
-	var links = [
-		{
-			url: 'FazQuotesStuff/index.html',
-			display: 'Faz-Quotes'
-		},
-		{
-			url: 'miniGames/index.html',
-			display: 'Minigames'
-		},
-		{
-			url: 'https://brand24376.github.io/Breakout%20in%20Javascript/index.html',
-			display: 'Breakout'
-		},
-		{
-			url: 'https://mhoover0413.github.io/minecraft.html',
-			display: '2D Minecraft'
-		},
-		{
-			url: 'https://mhoover0413.github.io/3DPC%20Sim%20JS/Fnaf1.html',
-			display: '(3DPC) 3 Days at Programing Class'
-		},
-		{
-			url: 'gettoschool/index.html',
-			display: 'Get To School Talon Ed'
-		},
-		{
-			url: 'https://brand24376.github.io/Get%202%20School/game.html',
-			display: 'Get To School Brandon Ed'
-		},
-		{
-			url: 'https://mhoover0413.github.io/GetToSchool.html',
-			display: 'Get To School Mac Ed'
-		},
-
-	]
-
-	function load() {
-		for (link of links) {
-			let linkElement = document.createElement('a')
-			linkElement.id = link.display
-			document.getElementById('hay').appendChild(linkElement)
-			let span = document.createElement('span')
-			span.id = link.display
-			span.innerHTML = cursorCharacter
-			document.getElementById('hay').appendChild(span)
-			document.getElementById('hay').appendChild(document.createElement('br'))
-		}
-		let linkCharacters = [];
-		for (link of links) {
-			let linkElement = document.getElementById(link.display)
-			let splitLink = link.display.split('')
-			for (i = 0; i < splitLink.length; i++) {
-				linkCharacters.push({ index: i, character: splitLink[i], link: link.display })
-			}
-		}
-		for (character of linkCharacters) {
-			let link
-			for (tempLink of links) {
-				if (tempLink.display == character.link)
-					link = tempLink
-			}
-			let lastCharacter = false
-			if (character.index == link.display.length - 1) {
-				lastCharacter = true
-			} else {
-				lastCharacter = false
-			}
-			allCharacters.push({ character: character.character, link: link.display, characterNumber: characterNumber, linkNumber: linkNumber, lastCharacter: lastCharacter })
-			characterNumber++
-			linkNumber++
-		}
-		for (character of allCharacters) {
-			writeCharacter(character)
-		}
-	}
-
-
-	function writeCharacter(character) {
-		setTimeout(() => {
-			console.log(typewriterSpeed);
-			let linkElement = document.getElementById(character.link)
-			linkElement.innerHTML += character.character
-			if (character.lastCharacter) {
-				for (link of links) {
-					if (link.display == character.link) {
-						makeLink(linkElement, link)
-					}
-				}
-			}
-			for (span of document.getElementsByTagName('span')) {
-				if (span.id == character.link) {
-					span.style.visibility = 'visible'
-				}
-				else {
-					span.style.visibility = 'hidden'
-				}
-			}
-		}, typewriterSpeed * character.characterNumber + typewriterSpeed);
-	}
-
-	function makeLink(linkElement, link) {
-		setTimeout(() => {
-			linkElement.href = link.url
-		}, typewriterSpeed);
-	}
-
-	setInterval(() => {
-		for (span of document.getElementsByTagName('span')) {
-			if (spanToggle) {
-				span.style.opacity = 1
-			} else
-				span.style.opacity = 0
-		}
-		if (spanToggle) {
-			spanToggle = false
-		} else {
-			spanToggle = true
-		}
-	}, cursorFlashSpeed)
-</script>
+<body style="background-color: black">
+    <script type="text/javascript" src="js/libs/pixi.js"></script>
+    <script type="text/javascript" src="js/libs/pixi-tilemap.js"></script>
+    <script type="text/javascript" src="js/libs/pixi-picture.js"></script>
+    <script type="text/javascript" src="js/libs/fpsmeter.js"></script>
+    <script type="text/javascript" src="js/libs/lz-string.js"></script>
+    <script type="text/javascript" src="js/libs/iphone-inline-video.browser.js"></script>
+    <script type="text/javascript" src="js/rpg_core.js"></script>
+    <script type="text/javascript" src="js/rpg_managers.js"></script>
+    <script type="text/javascript" src="js/rpg_objects.js"></script>
+    <script type="text/javascript" src="js/rpg_scenes.js"></script>
+    <script type="text/javascript" src="js/rpg_sprites.js"></script>
+    <script type="text/javascript" src="js/rpg_windows.js"></script>
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </body>
 
 </html>
